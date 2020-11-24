@@ -1,18 +1,25 @@
-package com.openfaas.function.model;
+package dev.zodo.openfaas.examples.fcall.vo;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum Operator {
-    SUM() {
+    SUM("+") {
         @Override
         public Double calculate(Double value1, Double value2) {
-            return nullToZero(value1) + nullToZero(value1);
+            return nullToZero(value1) + nullToZero(value2);
         }
     },
-    MULTIPLY() {
+    MULTIPLY("*") {
         @Override
         public Double calculate(Double value1, Double value2) {
-            return nullToZero(value1) * nullToZero(value1);
+            return nullToZero(value1) * nullToZero(value2);
         }
     };
+
+    private final String symbol;
 
     public abstract Double calculate(Double value1, Double value2);
 
