@@ -15,14 +15,14 @@ public class OpenfaasCallbackListener implements OpenfaasCallbackEvent<ResultDat
 
     @Override
     public void consume(AsyncCallbackResponse<ResultData> asyncResponse) {
-        log.info("Receive event: {}", asyncResponse.getFunctionName());
+        log.info("## Webhook: Receive event: {}", asyncResponse.getFunctionName());
         Optional.ofNullable(asyncResponse.getBody()).ifPresent(resultData -> {
-            log.info("CallId {}", asyncResponse.getCallId());
-            log.info("Duration {}ms", Optional.ofNullable(asyncResponse.getDurationSeconds())
+            log.info("## Webhook: CallId {}", asyncResponse.getCallId());
+            log.info("## Webhook: Duration {}ms", Optional.ofNullable(asyncResponse.getDurationSeconds())
                     .map(Duration::toMillis)
                     .orElse(null));
-            log.info("StatusCode {}", asyncResponse.getFunctionStatus());
-            log.info("{} {} {} = {}", resultData.getValue1(), resultData.getOperator().getSymbol(), resultData.getValue2(), resultData.getResult());
+            log.info("## Webhook: StatusCode {}", asyncResponse.getFunctionStatus());
+            log.info("## Webhook: Result: {} {} {} = {}", resultData.getValue1(), resultData.getOperator().getSymbol(), resultData.getValue2(), resultData.getResult());
         });
     }
 }
