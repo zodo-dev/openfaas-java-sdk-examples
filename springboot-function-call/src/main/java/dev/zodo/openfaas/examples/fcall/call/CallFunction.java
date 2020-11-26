@@ -37,7 +37,7 @@ public class CallFunction {
         log.info("[asyncCallSyncCalculator] {}", LocalDateTime.now());
         CalculatorData data = new CalculatorData(Operator.SUM, value1, value2);
         AsyncRequest<CalculatorData> request = new AsyncRequest<>("calculator", "http://10.0.0.31:8080/api/openfaas/async-callback", data);
-        AsyncResponse<ResultData> response = OpenfaasApi.getInstance().callAsyncFunction(request, ResultData.class);
+        AsyncResponse response = OpenfaasApi.getInstance().callAsyncFunction(request);
         log.info("CallId {}", response.getCallId());
         log.info("StartTime {}", response.getStartTime());
         log.info("StatusCode {}", response.getStatusCode());
