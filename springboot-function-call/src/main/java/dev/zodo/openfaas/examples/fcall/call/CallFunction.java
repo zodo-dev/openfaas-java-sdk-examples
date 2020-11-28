@@ -12,10 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @Slf4j
 @Service
@@ -29,7 +31,12 @@ public class CallFunction {
     private String password;
 
     private OpenfaasApi openfaasApi() {
-        return OpenfaasApi.getInstance(URI.create(url), username, password);
+        Supplier<Map<String, String>> oauthHeaderSupplier = () -> {
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Authorization:", "Bearer any_auth_token");
+            return headers;
+        };
+        return OpenfaasApi.getInstance(url, oauthHeaderSupplier);
     }
 
     public void callSyncCalculator(double value1, double value2) {
